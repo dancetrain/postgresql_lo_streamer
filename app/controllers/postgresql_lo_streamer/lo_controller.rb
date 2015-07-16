@@ -3,7 +3,8 @@
 module PostgresqlLoStreamer
   class LoController < ActionController::Base
     def stream
-      mime_type = Mime::Type.lookup_by_extension(request.original_url.split('.').last)
+      mime_type = Mime::Type.lookup_by_extension(request.original_url.split('.').last) || 'image/png'
+
       send_file_headers!({:type => mime_type, :disposition => 'inline'})
       self.status = 200
       self.response_body = Enumerator.new do |y|
